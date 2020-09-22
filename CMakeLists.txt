@@ -10,6 +10,7 @@ file(GLOB SOURCES
 	"include/*.h"
 	"src/*.cpp"
 )
+
 add_executable(${PROJECT_NAME}
   ${SOURCES})
 
