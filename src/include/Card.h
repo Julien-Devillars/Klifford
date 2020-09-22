@@ -1,3 +1,6 @@
+#ifndef __CARD_H__
+#define __CARD_H__
+
 #include <string>
 
 
@@ -20,3 +23,5 @@ private:
 
 
 };
+
+#endif

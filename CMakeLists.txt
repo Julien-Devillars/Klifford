@@ -6,13 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
-file(GLOB SOURCES
-	"include/*.h"
-	"src/*.cpp"
-)
+include_directories(src)
 
-add_executable(${PROJECT_NAME}
-  ${SOURCES})
-
-install(TARGETS ${PROJECT_NAME}
-  DESTINATION bin)
+add_subdirectory(src)
+#add_subdirectory(tst)
