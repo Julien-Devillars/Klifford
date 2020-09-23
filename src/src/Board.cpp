@@ -1,5 +1,4 @@
 #include "../include/Board.h"
-#include <stdlib.h>
 Case::Case() : _NBCARDS(0){};
 
 void Case::addHigher(Card c) 
@@ -39,6 +38,135 @@ Board::Board()
     updateHigherPile();
 }
 
+void Board::Win(int idxCase, bool HigherOrLower, Card c)
+{
+    printf("Next card is : %s\n", c.DrawCard().c_str());
+    HigherOrLower ? _board[idxCase].addHigher(c) : _board[idxCase].addLower(c);
+    _NB_PLAYS++;
+
+    updateHigherPile();
+}
+
+void Board::Lose(int idxCase, bool HigherOrLower, Card c)
+{
+    printf("\nNext card is : %s\n", c.DrawCard().c_str());
+    HigherOrLower ? _board[idxCase].addHigher(c) : _board[idxCase].addLower(c);
+    
+    printf("You loose %d points.\n", _board[idxCase]._NBCARDS);
+
+    _deck.putBackCard(_board[idxCase]._cards);
+
+    _board[idxCase].clear();
+    _board[idxCase].addHigher(_deck.FetchCard());
+
+    _NB_PLAYS = 0;
+
+    updateHigherPile();
+}
+
+void Board::playOnPile(int idxCase, int GreaterOrLess, bool HigherOrLower)
+{
+    // GreaterOrLess =>  -1 : Less | 0 = Equal | 1 = Greater
+    // HigherOrLOwer =>   0 : Play on the highest card | 1 : Play on the lowest card
+
+    Card nextCard = _deck.FetchCard();
+    Card cardChoosen = HigherOrLower  ? *(_board[idxCase]._cards.end()-1) : *_board[idxCase]._cards.begin();
+
+
+    if (GreaterOrLess == -1)        // Less
+
+        if (nextCard.getNumber() < cardChoosen.getNumber())
+            Win(idxCase, HigherOrLower, nextCard);
+        else
+            Lose(idxCase, HigherOrLower, nextCard);
+
+    else if (GreaterOrLess == 0)    // Equal
+
+        if (nextCard.getNumber() == cardChoosen.getNumber())
+            Win(idxCase, HigherOrLower, nextCard);
+        else
+            Lose(idxCase, HigherOrLower, nextCard);
+
+    else                            // Greater
+        if (nextCard.getNumber() > cardChoosen.getNumber())
+            Win(idxCase, HigherOrLower, nextCard);
+        else
+            Lose(idxCase, HigherOrLower, nextCard);
+
+}
+
+void Board::printCard(int idxCase, bool HigherOrLower)
+{
+    printf("\nCard : %s\n", HigherOrLower ?
+        _board[idxCase]._cards[_board[idxCase]._cards.size()-1].DrawCard().c_str()
+        : _board[idxCase]._cards[0].DrawCard().c_str()
+    );
+}
+
+void Board::play() 
+{
+    bool replay;
+    do
+    {
+        drawBoard();
+        int idxCase;
+        bool newPlayer = false;
+        if (_NB_PLAYS == 0)
+        {
+            printf("You must play on the highest pile(s) (choose) : ");
+            
+            do {
+                scanf("%d", &idxCase);
+
+            } while (std::find(_highestPile.begin(), _highestPile.end(), idxCase) == _highestPile.end());
+            printf("You choose %d\n", idxCase);
+        }
+        else
+        {
+            bool stillPlaying = true;
+            if (_NB_PLAYS > _NB_PLAY_BEFORE_NEXT)
+            {
+                printf("Do you wanna continue ? (no : 0 / YES : 1) : \n");
+                scanf("%d", &stillPlaying);
+            }
+            if (stillPlaying)
+            {
+                printf("Quel case jouer ? (0- %d) : ", _NB_CARDS_ON_BOARD - 1);
+                scanf("%d", &idxCase);
+            }
+            else
+            {
+                nextPlayer();
+                newPlayer = true;
+            }
+        }
+
+        if (!newPlayer)
+        {
+            int GreaterOrLess;
+            bool HigherOrLower;
+
+            printf("You have to choose which card play : Higher (0) or Lower (1) one : ");
+            scanf("%d", &HigherOrLower);
+
+
+            printCard(idxCase, HigherOrLower);
+
+            printf("You have to choose less (-1) or equal (0) or greater (1) : ");
+            scanf("%d", &GreaterOrLess);
+
+            playOnPile(idxCase, GreaterOrLess, HigherOrLower);
+        }
+
+        
+    } while (true);
+}
+
+void Board::nextPlayer()
+{
+    _idxCurrentPlayer = (_idxCurrentPlayer + 1 ) % _NB_PLAYERS;
+    _NB_PLAYS = 0;
+}
 
 Board::Board(std::vector<Player>& players)
 {
@@ -52,17 +180,14 @@ Board::Board(std::vector<Player>& players)
     for(int i = 0 ; i < _NB_CARDS_ON_BOARD ; ++i)
         _board[i].addHigher(_deck.FetchCard());
     
-
-    _board[2].addHigher(_deck.FetchCard());
-    _board[2].addHigher(_deck.FetchCard());
-    _board[2].drawCase();
-    
     updateHigherPile();
 }
 
 void Board::drawBoard()
 {
     system("CLS"); // Clear the console
+    printf("\n\n");
+    
     printf("\n\nPlayer : %s\n", _players[_idxCurrentPlayer]._name.c_str());
     printf("NB Plays: %d\n", _NB_PLAYS);
     printf("Size Pile : %d\n", _counterHighestPile);
@@ -82,8 +207,6 @@ void Board::drawBoard()
             
         printf("\n");
     }
-
-
 }
 
 void Board::updateHigherPile() {
@@ -93,13 +216,10 @@ void Board::updateHigherPile() {
 
     for(auto& myCase : _board)
         _counterHighestPile = std::max(_counterHighestPile, myCase._NBCARDS);
-    
-    printf("Counter : %d", _counterHighestPile);
 
     for (int i = 0; i < _NB_CARDS_ON_BOARD; ++i)
         if (_counterHighestPile == _board[i]._NBCARDS)
             _highestPile.push_back(i);
 
-    printf("Highest : %d", _highestPile[0]);
 }
 

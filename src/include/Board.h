@@ -4,6 +4,9 @@
 #include "Deck.h"
 #include "Player.h"
 
+#include <istream>
+#include <stdlib.h>
+
 #include <vector>
 #include <deque>
 
@@ -43,9 +46,11 @@ public:
 
     void updateHigherPile();
     void drawBoard();
-    void Win(int indexCase, bool borne, Card c);
-    void Lose(int indexCase, bool borne, Card c);
-    void play(int indexCase, int choix, bool borne);
+    void Win(int idxCase, bool HigherOrLower, Card c);
+    void Lose(int idxCase, bool HigherOrLower, Card c);
+    void playOnPile(int idxCase, int GreaterOrLess, bool HigherOrLower);
+    void printCard(int idxCase, bool GreaterOrLess);
+    void play();
     void nextPlayer();
 };
 #endif // BOARD_H

@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
     Board b(players);
     b.drawBoard();
 
+    b.play();
 
 
     return 1;

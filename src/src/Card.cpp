@@ -2,13 +2,22 @@
 
 Card::Card(Number n, Color c) : _number(n), _color(c) {}
 
-std::string Card::getColor() {
+Card::Color Card::getColor() 
+{
+    return _color;
+}
+Card::Number Card::getNumber()
+{
+    return _number;
+}
+
+std::string Card::getColorName() {
     std::string myColors[] = {"H", "C", "D", "S"};
 
     return myColors[_color];
 }
 
-std::string Card::getNumber() {
+std::string Card::getNumberName() {
     std::string myNumber[] = {"Joker", "As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
     return myNumber[_number];
@@ -16,5 +25,5 @@ std::string Card::getNumber() {
 
 
 std::string Card::DrawCard() {
-    return getNumber() + " " + getColor();
+    return getNumberName() + " " + getColorName();
 }

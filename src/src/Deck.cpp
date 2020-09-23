@@ -49,7 +49,7 @@ Card Deck::FetchCard()
     return _cards[(_positionCard > _NBCARDS-1) ? _positionCard = 0 : _positionCard++];
 };
 
-void Deck::putBackCard(std::vector<Card> c)
+void Deck::putBackCard(std::deque<Card> c)
 {
 
     for (int i = 0; i < c.size(); ++i)

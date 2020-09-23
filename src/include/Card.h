@@ -14,12 +14,15 @@ public:
     
     std::string DrawCard();
 
+    Color getColor();
+    Number getNumber();
+
 private:
     Color _color;
     Number _number;
 
-    std::string getColor();
-    std::string getNumber();
+    std::string getColorName();
+    std::string getNumberName();
 
 };
 

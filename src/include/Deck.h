@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 
 #include <stdlib.h> // srand, rand
 #include <time.h>   // time
@@ -24,7 +25,7 @@ public:
     void DrawDeck();    // Print all the deck
 
     Card FetchCard();                               // Able to take a card
-    void putBackCard(std::vector<Card> c);   // If a pile is lost, put back all the pile at the ned of the deck
+    void putBackCard(std::deque<Card> c);   // If a pile is lost, put back all the pile at the ned of the deck
 
 private:
 
