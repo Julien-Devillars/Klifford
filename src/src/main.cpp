@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include/Card.h"
+#include "../include/Card.h"
 
 int main(int argc, char* argv[])
 {
