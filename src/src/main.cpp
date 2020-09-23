@@ -1,12 +1,19 @@
 #include <iostream>
 #include "../include/Card.h"
+#include "../include/Deck.h"
+
+
 
 int main(int argc, char* argv[])
 {
-	Card myCard(Card::Number::Height, Card::Color::Diamond);
+    srand(time(NULL));
 
-	std::cout << myCard.DrawCarte() << std::endl;
+    Deck d;
+    d.init4();
+    d.shuffle();
+    d.DrawDeck();
+    std::cout << "----------------" << std::endl;
 
 
-	return 1;
+    return 1;
 }

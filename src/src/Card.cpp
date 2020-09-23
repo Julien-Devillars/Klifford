@@ -15,6 +15,6 @@ std::string Card::getNumber() {
 }
 
 
-std::string Card::DrawCarte() {
+std::string Card::DrawCard() {
     return getNumber() + " " + getColor();
 }

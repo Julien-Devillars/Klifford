@@ -6,6 +6,10 @@
 #include <string>
 #include <vector>
 
+#include <stdlib.h> // srand, rand
+#include <time.h>   // time
+#include <stdio.h>  // NULL
+
 class Deck {
 
 public:
@@ -14,12 +18,13 @@ public:
 
     void init32();      // Initialize the deck with 32 cards, straight as As, 7, 8, ..., Queen, King
     void init52();      // Initialize the deck with 52 cards, from As to King
+    void init4();
 
     void shuffle();     // Shuffle the deck
     void DrawDeck();    // Print all the deck
 
     Card FetchCard();                               // Able to take a card
-    void putBackCard(std::vector<std::string> c);   // If a pile is lost, put back all the pile at the ned of the deck
+    void putBackCard(std::vector<Card> c);   // If a pile is lost, put back all the pile at the ned of the deck
 
 private:
 
