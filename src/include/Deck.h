@@ -25,7 +25,9 @@ public:
     void DrawDeck();    // Print all the deck
 
     Card FetchCard();                               // Able to take a card
-    void putBackCard(std::deque<Card> c);   // If a pile is lost, put back all the pile at the ned of the deck
+    void putBackCard(std::deque<Card> c);           // If a pile is lost, put back all the pile at the ned of the deck
+
+    int getNbCards();
 
 private:
 

@@ -58,6 +58,11 @@ void Deck::putBackCard(std::deque<Card> c)
     }
 };
 
+int Deck::getNbCards()
+{
+    return _NBCARDS;
+}
+
 
 
 

@@ -50,8 +50,17 @@ void Board::Win(int idxCase, bool HigherOrLower, Card c)
 void Board::Lose(int idxCase, bool HigherOrLower, Card c)
 {
     printf("\nNext card is : %s\n", c.DrawCard().c_str());
-    HigherOrLower ? _board[idxCase].addHigher(c) : _board[idxCase].addLower(c);
     
+    HigherOrLower ? _board[idxCase].addHigher(c) : _board[idxCase].addLower(c);
+
+    _players[_idxCurrentPlayer].removePoints(_board[idxCase]._NBCARDS);
+    if(_players[_idxCurrentPlayer]._points <= 0)
+    {
+        auto ite = std::find(_players.begin(), _players.end(), _players[_idxCurrentPlayer]);
+        if (ite != _players.end())
+            _players.erase(ite);
+        _NB_PLAYERS--;
+    }
     printf("You loose %d points.\n", _board[idxCase]._NBCARDS);
 
     _deck.putBackCard(_board[idxCase]._cards);
@@ -62,6 +71,31 @@ void Board::Lose(int idxCase, bool HigherOrLower, Card c)
     _NB_PLAYS = 0;
 
     updateHigherPile();
+}
+
+bool Board::winCondition()
+{
+    // 2 ways to win the game
+    
+
+    // There is only one player left (all players lost all their points)
+    if (_players.size() == 1) {
+        printf("Player %s won the game, no more player left", _players[_idxCurrentPlayer]._name.c_str());
+        return true;
+    }
+
+    // There is no more cards
+    int cpt = 0;
+    for (auto& c : _board)
+        cpt += c._NBCARDS;
+
+    if (cpt == _deck.getNbCards())
+    {
+        printf("Player %s won the game, no more cards left", _players[_idxCurrentPlayer]._name.c_str());
+        return true;
+    }
+
+    return false;
 }
 
 void Board::playOnPile(int idxCase, int GreaterOrLess, bool HigherOrLower)
@@ -113,9 +147,8 @@ void Board::play()
         bool newPlayer = false;
         if (_NB_PLAYS == 0)
         {
-            printf("You must play on the highest pile(s) (choose) : ");
-            
             do {
+                printf("\nYou must play on the highest pile(s) (choose) : ");
                 scanf("%d", &idxCase);
 
             } while (std::find(_highestPile.begin(), _highestPile.end(), idxCase) == _highestPile.end());
@@ -144,22 +177,22 @@ void Board::play()
         if (!newPlayer)
         {
             int GreaterOrLess;
-            bool HigherOrLower;
+            int HigherOrLower;  // bool
 
             printf("You have to choose which card play : Higher (0) or Lower (1) one : ");
             scanf("%d", &HigherOrLower);
 
 
-            printCard(idxCase, HigherOrLower);
+            printCard(idxCase, static_cast<bool>(HigherOrLower));
 
             printf("You have to choose less (-1) or equal (0) or greater (1) : ");
             scanf("%d", &GreaterOrLess);
 
-            playOnPile(idxCase, GreaterOrLess, HigherOrLower);
+            playOnPile(idxCase, GreaterOrLess, static_cast<bool>(HigherOrLower));
         }
 
         
-    } while (true);
+    } while (!winCondition());
 }
 
 void Board::nextPlayer()
@@ -189,7 +222,8 @@ void Board::drawBoard()
     printf("\n\n");
     
     printf("\n\nPlayer : %s\n", _players[_idxCurrentPlayer]._name.c_str());
-    printf("NB Plays: %d\n", _NB_PLAYS);
+    printf("Points : %d\n", _players[_idxCurrentPlayer]._points);
+    printf("Nb Plays: %d\n", _NB_PLAYS);
     printf("Size Pile : %d\n", _counterHighestPile);
 
     std::string highestPiles = "";
