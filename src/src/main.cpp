@@ -15,11 +15,11 @@ int main(int argc, char* argv[])
     d.DrawDeck();
     std::cout << "----------------" << std::endl;
 
-    Player Ju("Ju");
+    Player Ju("Juju");
     Player Tim("Tim");
-    Player Raph("Raph");
+    Player Ali("Ali");
 
-    std::vector<Player> players{Ju, Tim, Raph};
+    std::vector<Player> players{Ju, Tim, Ali};
     Board b(players);
     b.drawBoard();
 

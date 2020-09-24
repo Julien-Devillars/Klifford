@@ -27,8 +27,8 @@ public:
 class Board
 {
 public:
-    int _NB_PLAY_BEFORE_NEXT = 2;
-    int _NB_CARDS_ON_BOARD = 1;
+    int _NB_PLAY_BEFORE_NEXT = 1;
+    int _NB_CARDS_ON_BOARD = 5;
 
     Deck _deck;
     std::vector<Case> _board;
@@ -52,6 +52,7 @@ public:
     bool winCondition();
     void printCard(int idxCase, bool GreaterOrLess);
     void play();
+    void checkRemovePlayer();
     void nextPlayer();
 };
 #endif // BOARD_H

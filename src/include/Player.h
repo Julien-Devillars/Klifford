@@ -6,7 +6,7 @@
 class Player
 {
 private:
-    const int _defaultPoints = 2;
+    const int _defaultPoints = 10;
     static int _id;
 
 public:
