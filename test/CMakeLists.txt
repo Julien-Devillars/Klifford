@@ -1,13 +1,14 @@
+set(PROJECT_NAME_TEST ${CMAKE_PROJECT_NAME}_TEST)
 
-include_directories (${TEST_SOURCE_DIR}/src
-                     )
+file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.cpp)
+set(SOURCES ${SOURCES})
 
 
+add_executable(${PROJECT_NAME_TEST} ${SOURCES})
 
-add_executable (Test test_card.cpp)
+target_link_libraries(${PROJECT_NAME_TEST} PUBLIC
+	gtest_main
+	${CMAKE_PROJECT_NAME}
+)
 
-target_link_libraries (Test
-                       Card
-                       )
-
-add_test (NAME MyTest COMMAND Test)
+add_test (NAME ${PROJECT_NAME_TEST} COMMAND ${PROJECT_NAME_TEST})

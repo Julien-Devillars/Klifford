@@ -1,7 +1,8 @@
+#include "gtest/gtest.h"
 #include "../src/include/Card.h"
 
-int main() 
+
+TEST(test_card, DemonstrateGTestMacros)
 {
-	printf("test\n");
-	return 0;
+	EXPECT_EQ(true, true);
 }

@@ -1,9 +1,9 @@
 set(PROJECT_NAME ${CMAKE_PROJECT_NAME})
 
-file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.h *.cpp)
+file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.cpp)
+file(GLOB_RECURSE HEADERS LIST_DIRECTORIES true *.h)
+
 set(SOURCES ${SOURCES})
+set(HEADERS ${HEADERS})
 
-add_executable(${PROJECT_NAME} ${SOURCES})
-
-add_library (Card src/card.cpp include/card.h)
-target_link_libraries(${PROJECT_NAME} Card)
+add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
