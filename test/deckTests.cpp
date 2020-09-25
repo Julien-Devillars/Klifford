@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "../src/include/Deck.h"
 
+#include <deque>
 
 class deckTest : public ::testing::Test
 {
@@ -54,4 +55,38 @@ TEST_F(deckTest, testOperatorEquality)
 	d2.init32();
 
 	EXPECT_EQ(d1, d2);
+}
+
+TEST_F(deckTest, testShuffle)
+{
+	Deck d1 = Deck();
+	d1.init52();
+	Deck d2 = d1;
+	int N = 500;
+	d1.shuffle(N); // 500 permutations 
+
+	EXPECT_NE(d1, d2);
+}
+
+TEST_F(deckTest, testFetchCard)
+{
+	deck.init4();
+
+	for (int i = 0; i < 4; ++i)
+	{
+		EXPECT_EQ(deck.getPositionCard(), i);
+		EXPECT_EQ(deck.fetchCard(), Card(Card::As, static_cast<Card::Color>(i)));
+	}
+}
+
+TEST_F(deckTest, testputBackCards)
+{
+	deck.init4();	// Replace the 4 as with the 4 cards below
+	std::deque<Card> cards{ KingC, JackC, NineH, NineD };
+
+	deck.putBackCards(cards);
+	EXPECT_EQ(deck.getPlacement(), 4);
+
+	for (int i = 0; i < deck.getCards().size(); ++i)
+		EXPECT_EQ(deck.getCards()[i], cards[i]);
 }

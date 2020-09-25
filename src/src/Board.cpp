@@ -26,14 +26,14 @@ void Case::drawCase()
 Board::Board()
 {
     _deck.init32();
-    _deck.shuffle();
+    _deck.shuffle(_PERMUTATION);
     _NB_PLAYERS = 1;
     _players.push_back(Player("Admin"));
 
     _board = std::vector<Case>(_NB_CARDS_ON_BOARD);
 
     for (int i = 0; i < _NB_CARDS_ON_BOARD; ++i)
-        _board[i].addHigher(_deck.FetchCard());
+        _board[i].addHigher(_deck.fetchCard());
 
     updateHigherPile();
 }
@@ -41,19 +41,19 @@ Board::Board()
 Board::Board(std::vector<Player>& players)
 {
     _deck.init32();
-    _deck.shuffle();
+    _deck.shuffle(_PERMUTATION);
     _NB_PLAYERS = players.size();
     _players = players;
 
     _board = std::vector<Case>(_NB_CARDS_ON_BOARD);
 
     for (int i = 0; i < _NB_CARDS_ON_BOARD; ++i)
-        _board[i].addHigher(_deck.FetchCard());
+        _board[i].addHigher(_deck.fetchCard());
 
     updateHigherPile();
 }
 
-void Board::Win(int idxCase, bool HigherOrLower, Card c)
+void Board::win(int idxCase, bool HigherOrLower, Card c)
 {
     printf("Next card is : %s\n", c.DrawCard().c_str());
     HigherOrLower ? _board[idxCase].addHigher(c) : _board[idxCase].addLower(c);
@@ -77,7 +77,7 @@ void Board::checkRemovePlayer()
    
 }
 
-void Board::Lose(int idxCase, bool HigherOrLower, Card c)
+void Board::lose(int idxCase, bool HigherOrLower, Card c)
 {
     printf("\nNext card is : %s\n", c.DrawCard().c_str());
     
@@ -89,10 +89,10 @@ void Board::Lose(int idxCase, bool HigherOrLower, Card c)
 
     printf("You loose %d points.\n", _board[idxCase]._NBCARDS);
 
-    _deck.putBackCard(_board[idxCase]._cards);
+    _deck.putBackCards(_board[idxCase]._cards);
 
     _board[idxCase].clear();
-    _board[idxCase].addHigher(_deck.FetchCard());
+    _board[idxCase].addHigher(_deck.fetchCard());
 
     _NB_PLAYS = 0;
 
@@ -129,21 +129,21 @@ void Board::playOnPile(int idxCase, int GreaterOrLess, bool HigherOrLower)
     // GreaterOrLess =>  -1 : Less | 0 = Equal | 1 = Greater
     // HigherOrLOwer =>   0 : Play on the highest card | 1 : Play on the lowest card
 
-    Card nextCard = _deck.FetchCard();
+    Card nextCard = _deck.fetchCard();
     Card cardChoosen = HigherOrLower  ? *(_board[idxCase]._cards.end()-1) : *_board[idxCase]._cards.begin();
 
 
     if (GreaterOrLess == -1)        // Less
 
         if (nextCard.getNumber() < cardChoosen.getNumber())
-            Win(idxCase, HigherOrLower, nextCard);
+            win(idxCase, HigherOrLower, nextCard);
         else
-            Lose(idxCase, HigherOrLower, nextCard);
+            lose(idxCase, HigherOrLower, nextCard);
 
     else if (GreaterOrLess == 0)    // Equal
 
         if (nextCard.getNumber() == cardChoosen.getNumber()) {
-            Win(idxCase, HigherOrLower, nextCard);
+            win(idxCase, HigherOrLower, nextCard);
             printf("EQUALITY ! Everyone lose %d points except %s\n", _counterHighestPile, _players[_idxCurrentPlayer]._name.c_str());
             for (int i = 0; i < _NB_PLAYERS; ++i)
                 if (i != _idxCurrentPlayer)
@@ -151,13 +151,13 @@ void Board::playOnPile(int idxCase, int GreaterOrLess, bool HigherOrLower)
             checkRemovePlayer();
         }
         else
-            Lose(idxCase, HigherOrLower, nextCard);
+            lose(idxCase, HigherOrLower, nextCard);
 
     else                            // Greater
         if (nextCard.getNumber() > cardChoosen.getNumber())
-            Win(idxCase, HigherOrLower, nextCard);
+            win(idxCase, HigherOrLower, nextCard);
         else
-            Lose(idxCase, HigherOrLower, nextCard);
+            lose(idxCase, HigherOrLower, nextCard);
 
 }
 

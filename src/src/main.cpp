@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 
     Deck d;
     d.init4();
-    d.shuffle();
+    d.shuffle(500);
     d.DrawDeck();
     std::cout << "----------------" << std::endl;
 

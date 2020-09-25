@@ -21,11 +21,11 @@ public:
     void init52();      // Initialize the deck with 52 cards, from As to King
     void init4();       // Initialize the deck with 04 cards, only As, (mainly for test)
 
-    void shuffle();     // Shuffle the deck
+    void shuffle(int permutation);     // Shuffle the deck
     void DrawDeck();    // Print all the deck
 
-    Card FetchCard();                               // Able to take a card
-    void putBackCard(std::deque<Card> c);           // If a pile is lost, put back all the pile at the ned of the deck
+    Card fetchCard();                               // Able to take a card
+    void putBackCards(std::deque<Card> c);           // If a pile is lost, put back all the pile at the ned of the deck
 
     int getNbCards();
     int getPositionCard();
@@ -34,6 +34,7 @@ public:
 
     Deck& operator=(const Deck& deck);
     friend bool operator==(const Deck& deck1, const Deck& deck2);
+    friend bool operator!=(const Deck& deck1, const Deck& deck2);
 private:
     
     std::vector<Card> _cards;

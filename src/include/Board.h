@@ -29,7 +29,7 @@ class Board
 public:
     int _NB_PLAY_BEFORE_NEXT = 1;
     int _NB_CARDS_ON_BOARD = 5;
-
+    const int _PERMUTATION = 1'000;
     Deck _deck;
     std::vector<Case> _board;
     int _counterHighestPile = 1;
@@ -46,8 +46,8 @@ public:
 
     void updateHigherPile();
     void drawBoard();
-    void Win(int idxCase, bool HigherOrLower, Card c);
-    void Lose(int idxCase, bool HigherOrLower, Card c);
+    void win(int idxCase, bool HigherOrLower, Card c);
+    void lose(int idxCase, bool HigherOrLower, Card c);
     void playOnPile(int idxCase, int GreaterOrLess, bool HigherOrLower);
     bool winCondition();
     void printCard(int idxCase, bool GreaterOrLess);

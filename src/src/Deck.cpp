@@ -29,9 +29,9 @@ void Deck::init4()
         _cards.push_back(Card(Card::As, static_cast<Card::Color>(i)));
 };
 
-void Deck::shuffle()
+void Deck::shuffle(int permutation)
 {
-    const int NB_PERMUTATION = 500;
+    const int NB_PERMUTATION = permutation;
 
     for(int i = 0 ; i < NB_PERMUTATION ; ++i)
         std::swap(_cards[rand()%_NBCARDS], _cards[rand()%_NBCARDS]);
@@ -44,12 +44,12 @@ void Deck::DrawDeck()
         printf("%s\n",card.DrawCard().c_str());
 };
 
-Card Deck::FetchCard()
+Card Deck::fetchCard()
 {
     return _cards[(_positionCard > _NBCARDS-1) ? _positionCard = 0 : _positionCard++];
 };
 
-void Deck::putBackCard(std::deque<Card> c)
+void Deck::putBackCards(std::deque<Card> c)
 {
 
     for (int i = 0; i < c.size(); ++i)
@@ -106,6 +106,10 @@ bool operator==(const Deck& deck1, const Deck& deck2)
     return true;
 };
 
+bool operator!=(const Deck& deck1, const Deck& deck2)
+{
+    return !(deck1 == deck2);
+};
 
 
 
