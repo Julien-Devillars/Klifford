@@ -6,7 +6,6 @@
 class deckTest : public ::testing::Test
 {
 protected:
-	friend Deck;
 	Deck deck;
 
 	virtual void SetUp() override
