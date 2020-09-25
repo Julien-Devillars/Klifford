@@ -15,7 +15,7 @@ public:
     Player(std::string  name, int points);
 
     Player& operator=(Player& player);
-    bool operator==(const Player& player);
+    friend bool operator==(const Player& player, const Player& player2);
 
     void setPoints(int points);
     void removePoints(int points);

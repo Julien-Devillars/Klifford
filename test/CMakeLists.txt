@@ -3,6 +3,7 @@ set(PROJECT_NAME_TEST ${CMAKE_PROJECT_NAME}_TEST)
 file(GLOB_RECURSE SOURCES LIST_DIRECTORIES true *.cpp)
 set(SOURCES ${SOURCES})
 
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 add_executable(${PROJECT_NAME_TEST} ${SOURCES})
 

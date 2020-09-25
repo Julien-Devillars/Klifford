@@ -15,9 +15,9 @@ Player& Player::operator=(Player& player)
     return *this;
 };
 
-bool Player::operator==(const Player& player)
+bool operator==(const Player& player1, const Player& player2)
 {
-    return this->_name == player._name && this->_points == player._points;
+    return player1._name == player2._name && player1._points == player2._points;
 };
 
 void Player::setPoints(int points)
