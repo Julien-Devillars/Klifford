@@ -1,14 +1,14 @@
 #include "../include/Board.h"
 Case::Case() : _NBCARDS(0){};
 
-void Case::addHigher(Card c) 
+void Case::addHigher(Card card) 
 {
-    _cards.push_back(c);
+    _cards.push_back(card);
     _NBCARDS++;
 };
-void Case::addLower(Card c) 
+void Case::addLower(Card card)
 {
-    _cards.push_front(c);
+    _cards.push_front(card);
     _NBCARDS++;
 };
 void Case::clear() 
