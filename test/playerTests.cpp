@@ -51,7 +51,7 @@ TEST_F(playerTest, testRemovePoints)
 	EXPECT_NE(p1._points, p2._points);
 }
 
-TEST_F(playerTest, testAssignement)
+TEST_F(playerTest, testOperatorAssignement)
 {
 	p1 = p2;
 	EXPECT_EQ(p1._name, p2._name);
@@ -59,7 +59,7 @@ TEST_F(playerTest, testAssignement)
 
 }
 
-TEST_F(playerTest, testEquality)
+TEST_F(playerTest, testOperatorEquality)
 {
 	p1 = p2;
 	EXPECT_EQ(p1, p2);

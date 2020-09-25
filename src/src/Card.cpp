@@ -27,3 +27,21 @@ std::string Card::getNumberName() {
 std::string Card::DrawCard() {
     return getNumberName() + " " + getColorName();
 }
+
+Card& Card::operator=(const Card& card)
+{
+    this->_color = card._color;
+    this->_number = card._number;
+
+    return *this;
+};
+
+bool operator==(const Card& card1, const Card& card2)
+{
+    return card1._color == card2._color && card1._number == card2._number;
+};
+
+bool operator!=(const Card& card1, const Card& card2)
+{
+    return !(card1 == card2);
+};

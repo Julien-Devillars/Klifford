@@ -17,13 +17,16 @@ public:
     Color getColor();
     Number getNumber();
 
-private:
-    Color _color;
-    Number _number;
-
     std::string getColorName();
     std::string getNumberName();
 
+    Card& operator=(const Card& player);
+    friend bool operator==(const Card& card1, const Card& card2);
+    friend bool operator!=(const Card& card1, const Card& card2);
+
+private:
+    Color _color;
+    Number _number;
 };
 
 static const Card AsH = Card(Card::As, Card::Heart);

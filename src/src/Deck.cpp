@@ -63,8 +63,48 @@ int Deck::getNbCards()
     return _NBCARDS;
 }
 
+int Deck::getPositionCard()
+{
+    return _positionCard;
+}
 
+int Deck::getPlacement()
+{
+    return _placement;
+}
 
+std::vector<Card> Deck::getCards()
+{
+    return _cards;
+}
+
+Deck& Deck::operator=(const Deck& deck)
+{
+
+    this->_cards = deck._cards;
+    this->_NBCARDS = deck._NBCARDS;
+    this->_placement = deck._placement;
+    this->_positionCard = deck._positionCard;
+
+    return *this;
+};
+
+bool operator==(const Deck& deck1, const Deck& deck2)
+{
+    if (deck1._cards.size() != deck2._cards.size())
+        return false;
+    
+    if (deck1._positionCard != deck2._positionCard)
+        return false;
+
+    if (deck1._placement != deck2._placement)
+        return false;
+
+    if (deck1._cards != deck2._cards)
+        return false;
+    
+    return true;
+};
 
 
 
