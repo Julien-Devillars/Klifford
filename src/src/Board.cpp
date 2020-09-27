@@ -106,7 +106,7 @@ bool Board::winCondition()
 
     // There is only one player left (all players lost all their points)
     if (_players.size() == 1) {
-        printf("Player %s won the game, no more player left", _players[_idxCurrentPlayer]._name.c_str());
+        printf("Player %s won the game, no more player left\n", _players[_idxCurrentPlayer]._name.c_str());
         return true;
     }
 
@@ -117,7 +117,7 @@ bool Board::winCondition()
 
     if (cpt == _deck.getNbCards())
     {
-        printf("Player %s won the game, no more cards left", _players[_idxCurrentPlayer]._name.c_str());
+        printf("Player %s won the game, no more cards left\n", _players[_idxCurrentPlayer]._name.c_str());
         return true;
     }
 
