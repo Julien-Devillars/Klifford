@@ -1,6 +1,6 @@
 #include "../include/Card.h"
 
-Card::Card(Number n, Color c) : _number(n), _color(c) {}
+Card::Card(Number number, Color color) : _number(number), _color(color) {}
 
 Card::Color Card::getColor() 
 {

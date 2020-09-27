@@ -9,7 +9,7 @@ public:
     enum Color { Heart, Club, Diamond, Spade, NB_COLOR };
     enum Number { Joker, As, Two, Three, Four, Five, Six, Seven, Height, Nine, Ten, Jack, Queen, King, NB_NUMBER };
 
-    Card(Number n, Color c);
+    Card(Number number, Color color);
     Card(){};
     
     std::string DrawCard();
