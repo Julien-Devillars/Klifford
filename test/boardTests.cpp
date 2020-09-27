@@ -166,3 +166,51 @@ TEST_F(boardTest, testWinCondition)
 
 	EXPECT_EQ(board2.winCondition(), true);
 }
+
+TEST_F(boardTest, testUpdateHigherPile)
+{
+	Board board = Board(players);
+
+	Card asCard = Card(Card::As, Card::Club);
+
+	for(int i = 0 ; i < 5; ++i)	// Same pile
+	{
+		board._board[0].addHigher(asCard);
+
+		board.updateHigherPile();
+		EXPECT_EQ(board._counterHighestPile, i + 2);
+		EXPECT_EQ(board._highestPile.size(), 1);
+	}
+
+	board.lose(0, 0, asCard);
+	EXPECT_EQ(board._counterHighestPile, 1);
+	EXPECT_EQ(board._highestPile.size(), 5);
+	
+	for (int i = 0; i < 5; ++i)	// Same pile
+	{
+		board._board[i].addHigher(asCard);
+
+		board.updateHigherPile();
+		EXPECT_EQ(board._counterHighestPile, 2);
+		EXPECT_EQ(board._highestPile.size(), i + 1);
+	}
+}
+
+TEST_F(boardTest, testRemovePlayer)
+{
+	Board board = Board(players);
+	int nbPlayers = players.size();
+
+	for (int i = 0 ; i < nbPlayers ; ++i, nbPlayers--)
+	{
+		board.checkRemovePlayer();
+		EXPECT_EQ(board._players.size(), nbPlayers);
+		EXPECT_EQ(board._NB_PLAYERS, nbPlayers);
+		
+		board._players[0].setPoints(0);
+		board.checkRemovePlayer();
+		
+		EXPECT_EQ(board._players.size(), nbPlayers - 1);
+		EXPECT_EQ(board._NB_PLAYERS, nbPlayers - 1);
+	}
+}
